@@ -1,0 +1,63 @@
+instances:
+  - url: bugtest1.docs.buildwithfern.com
+
+tabs:
+  tab-1:
+    display-name: Tab 1
+    icon: 'tab'
+  tab-2:
+    display-name: Tab 2
+    icon: 'tab'
+
+navigation:
+  - tab: tab-1
+    layout:
+      - page: A
+        path: ./docs/pages/tab-1/A.mdx
+      - page: B
+        path: ./docs/pages/tab-1/B.mdx
+      - section: Section 1
+        contents:
+          - page: C
+            path: ./docs/pages/tab-1/section-1/C.mdx
+  - tab: tab-2
+    layout:
+      - page: D
+        path: ./docs/pages/tab-2/D.mdx
+      - section: Section 1
+        contents:
+          - page: E
+            path: ./docs/pages/tab-2/section-1/E.mdx
+      - section: Section 2
+        contents:
+          - page: F
+            path: ./docs/pages/tab-2/section-2/F.mdx
+          - section: Nested Section
+            contents:
+              - page: G
+                path: ./docs/pages/tab-2/section-2/nested-section/G.mdx
+      - section: Section 3
+        contents:
+          - page: H
+            path: ./docs/pages/tab-2/section-3/H.mdx
+          - page: I
+            path: ./docs/pages/tab-2/section-3/I.mdx
+          - section: Nested Section
+            contents:
+              - page: J
+                path: ./docs/pages/tab-2/section-3/nested-section/J.mdx
+
+colors:
+  accentPrimary:
+    dark: '#ADFF8C'
+    light: '#418326'
+  background:
+    dark: '#000000'
+    light: '#FFFFFF'
+
+logo:
+  dark: ./docs/assets/logo-dark-mode.png
+  light: ./docs/assets/logo-light-mode.png
+  height: 160
+
+favicon: ./docs/assets/favicon.png
