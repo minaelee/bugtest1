@@ -7,16 +7,14 @@ on:
 jobs:
   copy-issue:
     runs-on: ubuntu-latest
-
+    if: ${{ github.event.label.name == 'ODA' }}
     steps:
-    - name: Check if the label is added
-      if: github.event.action == 'labeled'
-      uses: actions/github-script@v7
-      with:
-        github-token: ${{ secrets.GH_TOKEN }}
-        script: |
-          const payload = context.payload;
-          if (payload.issue.labels.some(label => label.name === 'ODA')) {
+      - name: Copy issue to Open Documentation Academy repository
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          script: |
+            const payload = context.payload;
             console.log('An issue has been labeled ODA. Copying the issue to the Open Documentation Academy repository.');
             const issueNumber = payload.issue.number;
             const repoOwner = payload.repository.owner.login;
@@ -29,13 +27,14 @@ jobs:
               repo: repoName,
               issue_number: issueNumber
             });
-            
+              
             const issueTitle = issue.data.title;
-            const issueBody = issueDetails.data.body + '\n\n---\n\nCopied from: [' + payload.repository.full_name + '#' + issueNumber + '](' + issue.html_url + ')';
+            const originalIssueUrl = payload.repository.html_url + '/issues/' + issueNumber;
+            const copiedIssueBody = issueDetails.data.body + '\n\n---\n\nCopied from: [' + payload.repository.full_name + '#' + issueNumber + '](' + originalIssueUrl + ')';
+
             await github.rest.issues.create({
               owner: targetRepoOwner,
               repo: targetRepoName,
               title: issueTitle,
-              body: issueBody
+              body: copiedIssueBody
             });
-          }
