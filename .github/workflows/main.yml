@@ -24,8 +24,7 @@ jobs:
             const targetRepoOwner = 'minaelee';
             const targetRepoName = 'test-workflows2';
             
-            const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
-            const issue = await octokit.rest.issues.get({
+            const issue = await github.rest.issues.get({
               owner: repoOwner,
               repo: repoName,
               issue_number: issueNumber
@@ -33,7 +32,7 @@ jobs:
             
             const issueTitle = issue.data.title;
             const issueBody = issue.data.body;
-            await octokit.rest.issues.create({
+            await github.rest.issues.create({
               owner: targetRepoOwner,
               repo: targetRepoName,
               title: issueTitle,
