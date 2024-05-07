@@ -17,7 +17,7 @@ jobs:
         script: |
           const payload = context.payload;
           if (payload.issue.labels.some(label => label.name === 'ODA')) {
-            console.log('Label added to issue');
+            console.log('An issue has been labeled ODA. Copying the issue to the Open Documentation Academy repository.');
             const issueNumber = payload.issue.number;
             const repoOwner = payload.repository.owner.login;
             const repoName = payload.repository.name;
