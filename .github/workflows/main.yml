@@ -15,7 +15,7 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const payload = github.context.payload;
+          const payload = context.payload;
           if (payload.issue.labels.some(label => label.name === 'ODA')) {
             console.log('Label added to issue');
             const issueNumber = payload.issue.number;
