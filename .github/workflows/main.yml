@@ -11,7 +11,7 @@ jobs:
     steps:
     - name: Check if the label is added
       if: github.event.action == 'labeled'
-      uses: actions/github-script@v5
+      uses: actions/github-script@v7
       with:
         github-token: ${{ secrets.GH_TOKEN }}
         script: |
