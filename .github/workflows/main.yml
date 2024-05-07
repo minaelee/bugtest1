@@ -1,0 +1,42 @@
+name: Copy Issue on ODA Label Added
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  copy-issue:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check if the label is added
+      if: github.event.action == 'labeled'
+      uses: actions/github-script@v5
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const payload = github.context.payload;
+          if (payload.issue.labels.some(label => label.name === 'ODA')) {
+            console.log('Label added to issue');
+            const issueNumber = payload.issue.number;
+            const repoOwner = payload.repository.owner.login;
+            const repoName = payload.repository.name;
+            const targetRepoOwner = 'minaelee';
+            const targetRepoName = 'test-workflows2';
+            
+            const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+            const issue = await octokit.rest.issues.get({
+              owner: repoOwner,
+              repo: repoName,
+              issue_number: issueNumber
+            });
+            
+            const issueTitle = issue.data.title;
+            const issueBody = issue.data.body;
+            await octokit.rest.issues.create({
+              owner: targetRepoOwner,
+              repo: targetRepoName,
+              title: issueTitle,
+              body: issueBody
+            });
+          }
