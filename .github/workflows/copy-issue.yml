@@ -31,7 +31,7 @@ jobs:
               
             const issueTitle = issue.data.title;
             const originalIssueUrl = payload.repository.html_url + '/issues/' + issueNumber;
-            const copiedIssueBody = issueDetails.data.body + '\n\n---\n\nCopied from: [' + payload.repository.full_name + '#' + issueNumber + '](' + originalIssueUrl + ')';
+            const copiedIssueBody = issue.data.body + '\n\n---\n\nCopied from: [' + payload.repository.full_name + '#' + issueNumber + '](' + originalIssueUrl + ')';
 
             await github.rest.issues.create({
               owner: targetRepoOwner,
