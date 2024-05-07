@@ -15,27 +15,15 @@ jobs:
         with:
           github-token: ${{ secrets.GH_TOKEN }}
           script: |
-            const payload = context.payload;
             console.log('An issue has been labeled ODA. Copying the issue to the Open Documentation Academy repository.');
-            const issueNumber = payload.issue.number;
-            const repoOwner = payload.repository.owner.login;
-            const repoName = payload.repository.name;
-            const targetRepoOwner = 'minaelee';
-            const targetRepoName = 'test-workflows';
-            
-            const issue = await github.rest.issues.get({
-              owner: repoOwner,
-              repo: repoName,
-              issue_number: issueNumber
-            });
-              
-            const issueTitle = issue.data.title;
-            const originalIssueUrl = payload.repository.html_url + '/issues/' + issueNumber;
-            const copiedIssueBody = issue.data.body + '\n\n---\n\nCopied from: [' + payload.repository.full_name + '#' + issueNumber + '](' + originalIssueUrl + ')';
+            const issue = context.payload.issue;
+
+            const originalIssueUrl = payload.repository.html_url + '/issues/' + issue.number;
+            const copiedIssueBody = issue.body + '\n\n---\n\nCopied from: [' + payload.repository.full_name + '#' + issue.number + '](' + originalIssueUrl + ')';
 
             await github.rest.issues.create({
-              owner: targetRepoOwner,
-              repo: targetRepoName,
-              title: issueTitle,
+              owner: 'minaelee',
+              repo: 'test-workflows',
+              title: issue.title,
               body: copiedIssueBody
             });
