@@ -31,7 +31,7 @@ jobs:
             });
             
             const issueTitle = issue.data.title;
-            const issueBody = issue.data.body;
+            const issueBody = issueDetails.data.body + '\n\n---\n\nCopied from: [' + payload.repository.full_name + '#' + issueNumber + '](' + issue.html_url + ')';
             await github.rest.issues.create({
               owner: targetRepoOwner,
               repo: targetRepoName,
