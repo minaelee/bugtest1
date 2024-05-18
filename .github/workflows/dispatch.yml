@@ -1,0 +1,49 @@
+name: Create New Issue via Workflow Trigger
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Create Issue
+        run: |
+          curl -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/minaelee/test-workflows2/issues \
+            -d '{"title":"test","body":"test"}'
+
+# on:
+#   issues:
+#     types:
+#       - labeled
+
+# jobs:
+#   copy-issue:
+#     if: github.event.label.name == 'ODA'
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Copy issue to Open Documentation Academy repository
+#         uses: actions/github-script@v7
+#         with:
+#           github-token: ${{ secrets.GH_TOKEN }}
+#           script: |
+#             console.log('An issue has been labeled ODA. Copying the issue to the Open Documentation Academy repository.');
+#             const issue = context.payload.issue;
+#             const originRepo = context.payload.repository;
+
+#             const originalIssueUrl = originRepo.html_url + '/issues/' + issue.number;
+#             const copiedIssueBody = issue.body + '\n\n---\n\nCopied from: [' + originRepo.full_name + '#' + issue.number + '](' + originalIssueUrl + ')';
+
+#             await github.rest.issues.create({
+#               owner: 'minaelee',
+#               repo: 'test-workflows',
+#               title: issue.title,
+#               body: copiedIssueBody
+#             });
