@@ -16,7 +16,6 @@ jobs:
         run: |
           curl --request POST \
           --url https://api.github.com/repos/minaelee/test-workflows2/issues \
-          # --url https://api.github.com/repos/canonical/open-documentation-academy/issues \
           --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
           --header 'content-type: application/json' \
           --data '{
@@ -24,7 +23,9 @@ jobs:
             "body": "This issue was automatically created by the GitHub Action workflow."
             }' \
           --fail
-    
+              
+          # --url https://api.github.com/repos/canonical/open-documentation-academy/issues \
+
     # steps:
     #   - name: Copy issue to Open Documentation Academy repository
     #     uses: actions/github-script@v7
